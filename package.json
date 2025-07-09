@@ -1,0 +1,27 @@
+{
+  "name": "artificial_jewellery",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^17.1.0",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^2.0.1",
+    "nodemailer": "^7.0.5",
+    "pg": "^8.16.3",
+    "razorpay": "^2.9.6",
+    "socket.io": "^4.8.1",
+    "twilio": "^5.7.2",
+    "uniqid": "^5.4.0"
+  }
+}

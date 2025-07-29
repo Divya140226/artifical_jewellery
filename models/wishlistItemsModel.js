@@ -73,7 +73,7 @@ updatewishlistItems: function (req, callback) {
     const id = req.params.itemId;
 
     pool.query(
-        "UPDATE wishlist_item s SET user_id = $1, product_id = $2 WHERE id = $3",
+        "UPDATE wishlist_items SET user_id = $1, product_id = $2 WHERE id = $3",
         [user_id, product_id, id],
         function (err, result) {
             const response = {

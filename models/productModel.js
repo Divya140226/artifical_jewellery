@@ -6,7 +6,7 @@ const pool = require('./db');
 
 var product = {
     getAllProduct: function (req, callback) {
-        pool.query("SELECT * FROM product ", function (err, result) {
+        pool.query("SELECT * FROM products ", function (err, result) {
             if (err) {
                 response={
                     status:false,
@@ -25,7 +25,7 @@ var product = {
 
     },
     getCategoriesProduct: function (req, callback) {
-        pool.query("SELECT p.*,  c.name as cat_name FROM product p LEFT JOIN categories c ON c.id = p.category_id WHERE p.category_id =  $1 ",[req.params.category_id], function (err, result) {
+        pool.query("SELECT p.*,  c.name as cat_name, co.name as collection_name FROM products p LEFT JOIN categories c ON c.id = p.category_id LEFT JOIN collections co ON co.id = p.collection_id WHERE p.category_id =  $1 ",[req.params.category_id], function (err, result) {
             console.log(err);
             
             if (err) {
@@ -49,7 +49,7 @@ var product = {
     addProduct: function (req, callback) {
   
       
-        pool.query("INSERT INTO product (name,description_product,price,category_id,brand_id,material,weight,stock_quantity,image_url) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)", [req.name,req.description_product,req.price,req.category_id,req.brand_id,req.material,req.weight,req.stock_quantity,req.image_url], function (err, result) {
+        pool.query("INSERT INTO products (name,description,price,stock,image_url,category_id,collection_id,material,weight) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)", [req.name,req.description,req.price,req.stock,req.image_url,req.category_id,req.collection_id,req.material,req.weight], function (err, result) {
             // console.log(err,result );
             //    console.log(req,"req" );
             response={
@@ -73,7 +73,7 @@ var product = {
     },
     getProductById: function (req, callback) {
         
-        pool.query("SELECT * FROM product  where id=$1",[req.params.id], function (err, result) {
+        pool.query("SELECT * FROM products  where id=$1",[req.params.id], function (err, result) {
             response={
                 status:false,
                 message:"Error!! while fetching datas"
@@ -96,9 +96,9 @@ var product = {
 
     },
     updateProduct: function (req, callback) {
-        const { name,description_product,price,category_id,brand_id,material,weight,stock_quantity,image_url} = req.body;
+        const {name,description,price,stock,image_url,category_id,collection_id,material,weight} = req.body;
         const{id}=req.params;
-        pool.query("UPDATE product SET name=$1,description_product=$2,price=$3, category_id=$4, brand_id=$5, material=$6,weight=$7, stock_quantity=$8,image_url=$9 WHERE id =$10", [name,description_product,price,category_id,brand_id,material,weight,stock_quantity,image_url, id], function (err, result) {
+        pool.query("UPDATE products SET name=$1,description=$2,price=$3,  stock =$4, image_url=$5, category_id=$6, collection_id=$7, material=$8,weight=$9 WHERE id =$10", [name,description,price,stock,image_url,category_id,collection_id,material,weight, id], function (err, result) {
             //console.log(err,"update");
             
             response={
@@ -124,7 +124,7 @@ var product = {
     
    	deleteProduct: function (req, callback) {
 		pool.query(
-			`DELETE FROM product WHERE id=$1`,
+			`DELETE FROM products WHERE id=$1`,
 			[req.params.id],
 			function (err, result) {
 				if (err) {
@@ -145,10 +145,10 @@ var product = {
         SELECT p.*, 
            c.name AS category_name, 
            c.description AS category_description, 
-           b.name AS brand_name
-    FROM product p
+           b.name AS collection_name
+    FROM products p
     LEFT JOIN categories c ON p.category_id = c.id
-    LEFT JOIN brands b ON p.brand_id = b.id
+    LEFT JOIN collections b ON p.collection_id = b.id
     WHERE LOWER(p.name) LIKE LOWER($1)
        OR LOWER(c.name) LIKE LOWER($1)
        OR LOWER(b.name) LIKE LOWER($1)
@@ -174,7 +174,7 @@ var product = {
     
   const {
     category,
-    brand,
+    collection,
 
     product,
     minPrice,
@@ -185,10 +185,10 @@ var product = {
     SELECT p.*, 
            c.name AS category_name, 
            c.description AS category_description, 
-           b.name AS brand_name
-    FROM product p
+           b.name AS collection_name
+    FROM products p
     LEFT JOIN categories c ON p.category_id = c.id
-    LEFT JOIN brands b ON p.brand_id = b.id
+    LEFT JOIN collections b ON p.collection_id = b.id
     WHERE
       ($1::text IS NULL OR LOWER(c.name) LIKE LOWER('%' || $1 || '%')) AND
       ($2::text IS NULL OR LOWER(b.name) LIKE LOWER('%' || $2 || '%')) AND
@@ -198,7 +198,7 @@ var product = {
     ORDER BY p.id DESC
   `, [
     category || null,
-    brand || null,
+    collection || null,
     product || null,
     minPrice || null,
     maxPrice || null

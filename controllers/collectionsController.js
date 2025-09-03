@@ -1,9 +1,9 @@
 
-var enquiriesModel = require('../models/enquiriesModel');
+var collectionsModel = require('../models/collectionsModel');
 
-async function getAllEnquiries(req, res) {
+async function getAllCollections(req, res) {
     try {
-      enquiriesModel.getAllEnquiries(req.body, function (err, rows) {
+      collectionsModel.getAllCollections(req.body, function (err, rows) {
         if (err) {
             res.json(rows);
         } else {
@@ -12,13 +12,13 @@ async function getAllEnquiries(req, res) {
         }
     });
     } catch (error) {
-      console.error('Error fetching enquiries:', error);
+      console.error('Error fetching collections:', error);
       res.status(500).json({ error: 'Internal server error' });
     }
   }
-  async function addEnquiries(req, res) {
+  async function addCollections(req, res) {
     try {
-      enquiriesModel.addEnquiries(req.body, function (err, rows) {
+      collectionsModel.addCollections(req.body, function (err, rows) {
        
 console.log(err);
 
@@ -35,13 +35,13 @@ console.log(err);
         }
     });
     } catch (error) {
-      console.error('Error fetching enquiries:', error);
+      console.error('Error fetching collections:', error);
       res.status(500).json({ error: 'Internal server error' });
     }
   }
-  async function getEnquiriesById(req, res) {
+  async function getCollectionsById(req, res) {
     try {
-      enquiriesModel.getEnquiriesById(req, function (err, rows) {
+      collectionsModel.getCollectionsById(req, function (err, rows) {
         if (err) {
             res.json(rows);
         } else {
@@ -50,13 +50,13 @@ console.log(err);
         }
     });
     } catch (error) {
-      console.error('Error fetching enquiries:', error);
+      console.error('Error fetching collections:', error);
       res.status(500).json({ error: 'Internal server error' });
     }
   }
-  async function updateEnquiries(req, res) {
+  async function updateCollections(req, res) {
     try {
-      enquiriesModel.updateEnquiries(req, function (err, rows) {
+      collectionsModel.updateCollections(req, function (err, rows) {
         if (err) {
           res.status(500).send({
             message: rows,
@@ -70,13 +70,13 @@ console.log(err);
         }
     });
     } catch (error) {
-      console.error('Error fetching enquiries:', error);
+      console.error('Error fetching collections:', error);
       res.status(500).json({ error: 'Internal server error' });
     }
   }
-  async function deleteEnquiries(req, res) {
+  async function deleteCollections(req, res) {
     try {
-      enquiriesModel.deleteEnquiries(req, function (err, rows) {
+      collectionsModel.deleteCollections(req, function (err, rows) {
         if (err) {
           res.status(500).send({
             message: rows,
@@ -90,7 +90,7 @@ console.log(err);
         }
     });
     } catch (error) {
-      console.error('Error fetching enquiries:', error);
+      console.error('Error fetching collections:', error);
       res.status(500).json({ error: 'Internal server error' });
     }
   }
@@ -98,10 +98,10 @@ console.log(err);
 
 
 module.exports = {
-  getAllEnquiries,
-  addEnquiries,
-  getEnquiriesById,
-  updateEnquiries,
-  deleteEnquiries,
+  getAllCollections,
+  addCollections,
+  getCollectionsById,
+  updateCollections,
+  deleteCollections,
  
 };

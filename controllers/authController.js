@@ -9,14 +9,24 @@ const transporter = require('../commonFunction/emailSender');
 const { findUserByEmail, createUser, updateUserPassword,findUserByEmailOrMobile,createUserWithOnlyIdentifier , updateUserDetails  } = require('../models/userModel');
 
 exports.register = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { first_name, last_name, email, password } = req.body;
+
   const existingUser = await findUserByEmail(email);
-  if (existingUser) return res.status(400).json({ message: 'User already exists' });
+  if (existingUser) {
+    return res.status(400).json({ message: 'User already exists' });
+  }
 
   const hashedPassword = await bcrypt.hash(password, 10);
-  const user = await createUser(name, email, hashedPassword);
-  res.status(201).json({ status: true, message: 'User registered', user });
+
+  const user = await createUser(first_name, last_name, email, hashedPassword);
+
+  res.status(201).json({
+    status: true,
+    message: 'User registered successfully',
+    user
+  });
 };
+
 
 exports.login = async (req, res) => {
   const { email, password } = req.body;

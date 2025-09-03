@@ -4,9 +4,9 @@ const pool = require('./db');
 // const { toTitleCase } = require('../lib/common-function/toTittleCase');
 
 
-var enquiries = {
-    getAllEnquiries: function (req, callback) {
-        pool.query("SELECT * FROM enquiries", function (err, result) {
+var subscriptions = {
+    getAllSubscriptions: function (req, callback) {
+        pool.query("SELECT * FROM subscriptions", function (err, result) {
             if (err) {
                 response={
                     status:false,
@@ -25,8 +25,8 @@ var enquiries = {
 
     },
    
-    addEnquiries: function (req, callback) {
-        pool.query("INSERT INTO enquiries (monthly_amt, mobile_no) VALUES ($1, $2)", [req.monthly_amt, req.mobile_no], function (err, result) {
+    addSubscriptions: function (req, callback) {
+        pool.query("INSERT INTO subscriptions (email, is_active) VALUES ($1, $2)", [req.email, req.is_active], function (err, result) {
         //    console.log(err,result );
             //    console.log(req,"req" );
             response={
@@ -48,9 +48,9 @@ var enquiries = {
         });
 
     },
-    getEnquiriesById: function (req, callback) {
+    getSubscriptionsById: function (req, callback) {
         
-        pool.query("SELECT * FROM enquiries  where id=$1",[req.params.id], function (err, result) {
+        pool.query("SELECT * FROM subscriptions  where id=$1",[req.params.id], function (err, result) {
             response={
                 status:false,
                 message:"Error!! while fetching datas"
@@ -72,10 +72,10 @@ var enquiries = {
         });
 
     },
-    updateEnquiries: function (req, callback) {
-        const { monthly_amt, mobile_no } = req.body;
+    updateSubscriptions: function (req, callback) {
+        const { email, is_active } = req.body;
         const{id}=req.params;
-        pool.query("UPDATE enquiries SET monthly_amt=$1, mobile_no=$2  WHERE id =$3", [monthly_amt, mobile_no, id], function (err, result) {
+        pool.query("UPDATE subscriptions SET email=$1, is_active=$2 WHERE id =$3", [email, is_active, id], function (err, result) {
             //console.log(err,"update");
             
             response={
@@ -98,9 +98,9 @@ var enquiries = {
         });
 
     },
-    deleteEnquiries: function (req, callback) {
+    deleteSubscriptions: function (req, callback) {
         pool.query(
-            `DELETE FROM enquiries WHERE id=$1`,
+            `DELETE FROM subscriptions WHERE id=$1`,
             [req.params.id],
             function (err, result) {
                 if (err) {
@@ -116,4 +116,4 @@ var enquiries = {
     },
 }
 
-module.exports = enquiries;
+module.exports = subscriptions;

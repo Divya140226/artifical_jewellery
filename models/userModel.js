@@ -6,13 +6,16 @@ const findUserByEmail = async (email) => {
   return res.rows[0];
 };
 
-const createUser = async (name, email, hashedPassword) => {
+const createUser = async (firstName, lastName, email, hashedPassword) => {
   const res = await pool.query(
-    'INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING *',
-    [name, email, hashedPassword]
+    `INSERT INTO users (first_name, last_name, email, password)
+     VALUES ($1, $2, $3, $4)
+     RETURNING id, first_name, last_name, email`,
+    [firstName, lastName, email, hashedPassword]
   );
   return res.rows[0];
 };
+
 const updateUserPassword = async (email, hashedPassword) => {
   const result = await pool.query(
     'UPDATE users SET password = $1 WHERE email = $2',

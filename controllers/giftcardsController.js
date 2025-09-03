@@ -1,9 +1,9 @@
 
-var brandsModel = require('../models/brandsModel');
+var giftcardsModel = require('../models/giftcardsModel');
 
-async function getAllBrands(req, res) {
+async function getAllGiftcards(req, res) {
     try {
-      brandsModel.getAllBrands(req.body, function (err, rows) {
+      giftcardsModel.getAllGiftcards(req.body, function (err, rows) {
         if (err) {
             res.json(rows);
         } else {
@@ -12,13 +12,13 @@ async function getAllBrands(req, res) {
         }
     });
     } catch (error) {
-      console.error('Error fetching brands:', error);
+      console.error('Error fetching giftcards:', error);
       res.status(500).json({ error: 'Internal server error' });
     }
   }
-  async function addBrands(req, res) {
+  async function addGiftcards(req, res) {
     try {
-      brandsModel.addBrands(req.body, function (err, rows) {
+      giftcardsModel.addGiftcards(req.body, function (err, rows) {
        
 console.log(err);
 
@@ -35,13 +35,13 @@ console.log(err);
         }
     });
     } catch (error) {
-      console.error('Error fetching brands:', error);
+      console.error('Error fetching giftcards:', error);
       res.status(500).json({ error: 'Internal server error' });
     }
   }
-  async function getBrandsById(req, res) {
+  async function getGiftcardsById(req, res) {
     try {
-      brandsModel.getBrandsById(req, function (err, rows) {
+      giftcardsModel.getGiftcardsById(req, function (err, rows) {
         if (err) {
             res.json(rows);
         } else {
@@ -50,13 +50,13 @@ console.log(err);
         }
     });
     } catch (error) {
-      console.error('Error fetching brands:', error);
+      console.error('Error fetching giftcards:', error);
       res.status(500).json({ error: 'Internal server error' });
     }
   }
-  async function updateBrands(req, res) {
+  async function updateGiftcards(req, res) {
     try {
-      brandsModel.updateBrands(req, function (err, rows) {
+      giftcardsModel.updateGiftcards(req, function (err, rows) {
         if (err) {
           res.status(500).send({
             message: rows,
@@ -70,13 +70,13 @@ console.log(err);
         }
     });
     } catch (error) {
-      console.error('Error fetching brands:', error);
+      console.error('Error fetching giftcards:', error);
       res.status(500).json({ error: 'Internal server error' });
     }
   }
-  async function deleteBrands(req, res) {
+  async function deleteGiftcards(req, res) {
     try {
-      brandsModel.deleteBrands(req, function (err, rows) {
+      giftcardsModel.deleteGiftcards(req, function (err, rows) {
         if (err) {
           res.status(500).send({
             message: rows,
@@ -90,7 +90,7 @@ console.log(err);
         }
     });
     } catch (error) {
-      console.error('Error fetching brands:', error);
+      console.error('Error fetching giftcards:', error);
       res.status(500).json({ error: 'Internal server error' });
     }
   }
@@ -98,10 +98,10 @@ console.log(err);
 
 
 module.exports = {
-  getAllBrands,
-  addBrands,
-  getBrandsById,
-  updateBrands,
-  deleteBrands,
+  getAllGiftcards,
+  addGiftcards,
+  getGiftcardsById,
+  updateGiftcards,
+  deleteGiftcards,
  
 };
